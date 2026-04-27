@@ -10,9 +10,6 @@ export async function GET(_request, { params }) {
       `SELECT avatar FROM account WHERE id=?`,
       [id]
     );
-
-    console.log("IMG")
-    console.log(rows.length,rows[0]?.avatar)
     if(rows.length===0||!rows[0].avatar){
       return new NextResponse(
         "Avatar not found",
@@ -21,7 +18,7 @@ export async function GET(_request, { params }) {
     }
 
     const res = new NextResponse(
-      rows[0].avatar,
+      Buffer.from(rows[0].avatar),
       {
         headers:{
           "Content-Type":"image/png"
