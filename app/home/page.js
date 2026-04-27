@@ -6,6 +6,7 @@ import "./home.css"
 
 export default function Page() {
     const { account, setAccount, accLoading } = useAuth();
+    const [ loading, setLoading ] = useState();
 
     const [form, setForm] = useState({
         name: "",
@@ -71,6 +72,7 @@ export default function Page() {
             if (res.ok) {
                 setAccount(updatedUser); 
                 alert("User updated");
+                window.location.reload();
             } else {
                 alert(updatedUser.message || "failed");
             }
@@ -82,16 +84,40 @@ export default function Page() {
     if (accLoading) return <div>Loading...</div>;
 
     useEffect(() => {
-        if (account) {
-            setForm({
-                name: account.name,
-                email: account.email,
-                password: account.password,
-                avatar: account.avatar
-            })
+        const loadForm = async () => {
+            if (account) {
+                setLoading(true)
+                let avatarFile=null;
+                if(account.avatar){
+                    const urlToFile = async (url,filename,type) => { //CONVERT STRING URL TO FILE
+                        const res=await fetch(url);
+
+                        const blob=await res.blob();
+
+                        return new File([blob],filename,{type});
+                    }
+
+                    avatarFile=await urlToFile(
+                        account.avatar, //URL
+                        "avatar.png", //NAME
+                        "image/png" //FILE TYPE
+                    );
+                }
+
+                setForm({
+                    name: account.name,
+                    email: account.email,
+                    password: account.password,
+                    avatar: avatarFile
+                })
+                setLoading(false)
+            }
         }
+        loadForm()
     },[account])
 
+    if (accLoading) return <h1>Loading...</h1>;
+    
     return (
         <div>
             <Navbar />
@@ -99,9 +125,9 @@ export default function Page() {
             <div className='pad'>
                 <div className='box'>
                     <h1>HOME</h1>
-
-                    {account ? (
-                        <>
+                
+                    {(account) ? (
+                        (!loading) ? (<>
                             <div className='profile'>
                                 <img src={account.avatar} alt="profile" />
                                 <h3>{account.name}</h3>
@@ -120,7 +146,7 @@ export default function Page() {
                                         type="text"
                                         name="name"
                                         placeholder="Name"
-                                        value={form.name}
+                                        value={form.name ?? ""}
                                         onChange={handleChange}
                                         required
                                     />
@@ -132,7 +158,7 @@ export default function Page() {
                                         type="email"
                                         name="email"
                                         placeholder="Email"
-                                        value={form.email}
+                                        value={form.email ?? ""}
                                         onChange={handleChange}
                                         required
                                     />
@@ -144,7 +170,7 @@ export default function Page() {
                                         type="password"
                                         name="password"
                                         placeholder="Password"
-                                        value={form.password}
+                                        value={form.password ?? ""}
                                         onChange={handleChange}
                                         required
                                     />
@@ -163,7 +189,7 @@ export default function Page() {
                                 <button type='submit'>Apply</button>
 
                             </form>
-                        </>
+                        </>) : <h4>LOADING PROFILE...</h4>
                     ) : (
                         <p>
                             <a href="/login">Login</a> to see your homepage.

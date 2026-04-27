@@ -78,8 +78,8 @@ export default function page() {
                             onChange={handleChange}
                         />
                         <div className='line'>
-                            <button type='submit'>Submit</button>
-                            <button onClick={handleCancel}>Cancel</button>
+                            <button disabled={submitting} type='submit'>{!submitting ? "Submit" : "Submitting"}</button>
+                            <button disabled={submitting} onClick={handleCancel}>Cancel</button>
                         </div>
                     </form>
                 </div>

@@ -16,10 +16,12 @@ export default function page() {
     const {account, _, accLoading} = useAuth();
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
+    const [submitting, setSubmitting] = useState(false);
 
     const handleCommentSubmit = async (e) => {
+        if (submitting) return
         if (!account) return alert("Please login to comment");
-
+        setSubmitting(true)
         try {
             const res = await fetch(`/api/forum/${id}/comment`, {
                 method: "POST",
@@ -39,6 +41,8 @@ export default function page() {
             }
         } catch (err) {
             console.error("Comment failed:", err);
+        } finally {
+            setSubmitting(false)
         }
     }
     
@@ -97,7 +101,7 @@ export default function page() {
                     onChange={(e)=>{
                         setComment(e.target.value)
                     }}></textarea>
-                    <button type="button" onClick={handleCommentSubmit}>Submit</button>
+                    <button type="button" disabled={submitting} onClick={handleCommentSubmit}>{!submitting ? "Submit" : "Submitting"}</button>
                 </div>
             </div>}
             

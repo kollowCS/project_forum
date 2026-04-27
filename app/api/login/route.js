@@ -66,5 +66,6 @@ export async function GET(request) {
     if (rows.length === 0) {
         return Response.json({ message: "Invalid login token" }, { status: 401 });
     }
+    rows[0].avatar = "/api/avatar/"+rows[0].id
     return Response.json(rows[0]); 
 }

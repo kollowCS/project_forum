@@ -9,8 +9,8 @@ export default function MainAccount({ children }) {
 
   //Auto-login on refresh
   useEffect(() => {
-    setLoading(true);
     const loadAcc = async () => {
+      setLoading(true);
       const data = await getLogin();
       //console.log(data);
       setAccount(data);
@@ -21,7 +21,7 @@ export default function MainAccount({ children }) {
   }, []);
 
   useEffect(() => {
-  console.log("Current account state:", account);
+    console.log("Current account state:", account);
   }, [account]);
 
   return (

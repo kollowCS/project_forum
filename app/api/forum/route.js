@@ -25,6 +25,9 @@ export async function GET(request) {
             ORDER BY topic.id DESC 
             LIMIT ? OFFSET ?
         `, [searchVal,searchVal,limit,page * limit])  // PAGENATION (ex. 0 * LIM + LIM, 1 * LIM + LIM, ... Offset)
+        rows.map((topic)=>{
+            topic.avatar =`/api/avatar/${topic.owner_id}`;
+        })
         return NextResponse.json(rows);
     } catch (error) {
         console.log(error);

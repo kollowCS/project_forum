@@ -30,6 +30,7 @@ export async function GET(request, { params }) {
         );
     }
   
+    rows[0].avatar = "/api/avatar/"+rows[0].owner_id
     rows[0].liked = rows[0].liked > 0 ? true : false;
     console.log(rows)
      return NextResponse.json(rows[0]);

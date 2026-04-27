@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { mysqlPool } from "@/utils/db";
+import fs from "fs/promises";
 
 async function GetToken() {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
@@ -24,6 +25,8 @@ export async function GET(request) {
     const [rows, fields] = await promisePool.query(
         'SELECT id, username, name, email FROM account'
     )
+    // rows[0].avatar = rows[0].id; //HACKY SOLUTION TO MY ALREADY MESSED UP CODE
+    rows[0].avatar=`/api/avatar/${id}`;
     return NextResponse.json(rows);
 }
 
@@ -60,10 +63,12 @@ export async function POST(request) {
         )
     }
     
+    let avatar=await fs.readFile("./public/uploads/fox.png"); //DEFAULT IMAGE HERE
+    
     const [result] = await promisePool.query(
       `INSERT INTO account (username, name, email, password, avatar)
        VALUES (?, ?, ?, ?, ?)`,
-       [username, name, email, password, "uploads/fox.png"]
+       [username, name, email, password, avatar]
     )
     
     const [rows] = await promisePool.query(

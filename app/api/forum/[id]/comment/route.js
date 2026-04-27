@@ -16,7 +16,9 @@ export async function GET(_request, { params }) {
     `,
     [id]
   );
-
+    rows.map((comment)=>{
+        comment.avatar = `/api/avatar/${comment.user_id}`;
+    })
   return NextResponse.json(rows);
 }
 
