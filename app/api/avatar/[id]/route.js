@@ -17,18 +17,15 @@ export async function GET(_request, { params }) {
       );
     }
     
-    const avatarBuffer = rows[0].avatar;
+    const buffer = rows[0].avatar;
+    const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
 
-    // Use Uint8Array to ensure Web Response compatibility
-    const imageData = new Uint8Array(avatarBuffer);
-
-    return new NextResponse(imageData, {
-    headers: {
+    return new Response(arrayBuffer, {
+      headers: {
         "Content-Type": "image/png",
-        "Content-Length": imageData.length.toString(),
-    },
+        "Content-Length": buffer.length.toString(),
+      },
     });
-
   }catch(e){
     console.log(e);
 
