@@ -1,0 +1,273 @@
+body {
+    background-color: rgb(175, 181, 215);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* NAVIGATION BAR STYLE */
+
+.navbar {
+    list-style-type: none;
+    background-color: rgb(60, 60, 120);
+    margin: 0;
+    padding: 8px 10px;
+    overflow: hidden;
+    justify-content: space-between;
+    display: flex;
+    font-size: 32px;
+    font-weight:bold;
+}
+
+.left {
+    display: flex;
+    gap: 20px;
+}
+
+.right {
+    display: flex;
+    margin-left: auto;
+    gap: 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+/* CENTER BOX STYLE */
+
+.centerbox {
+    border: 10px solid rgb(62, 62, 114);
+    background-color: rgb(217, 217, 233);
+    box-shadow: 10px 10px 10px rgb(0, 0, 0,0.5);
+    text-align: center;
+    margin: 0;
+    padding: 20px 40px;
+    height: auto;
+    width: 400px;
+}
+
+.centerbox form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+}
+.centerbox input, .centerbox button {
+    padding: 12px;
+    font-size: 24px;
+}
+
+.centerbox button {
+    background-color: rgb(60, 60, 120);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.centerbox p {
+    font-size: 18px;
+}
+
+/* Thanks. Sirukan*/
+.wrapper { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+}
+
+.pad {
+  padding: 20px;
+}
+
+.box {
+    border: 10px solid rgb(62, 62, 114);
+    background-color: rgb(217, 217, 233);
+    box-shadow: 10px 10px 10px rgb(0, 0, 0,0.5);
+    margin: 0;
+    padding: 20px 30px;
+}
+
+.semibox {
+    border: 4px solid rgb(62, 62, 114);
+    background-color: rgb(217, 217, 233);
+    box-shadow: 4px 4px 10px rgb(0, 0, 0,0.5);
+    margin: 0;
+    padding: 12px 12px;
+    gap: 10px;
+    /* display: flex; */
+    /* align-items: center; */
+}
+
+h1 {
+    font-size: 40px;
+    color: rgb(0, 0, 0);
+}
+
+.slide {
+    /* border: 4px solid rgb(62, 62, 114); */
+    background-color: rgb(141, 141, 175);
+    padding: 0px 10px;
+}
+
+.slide {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.infoBox {
+    border: 4px solid rgb(62, 62, 114);
+    background-color: rgb(217, 217, 233);
+    box-shadow: 4px 4px 10px rgb(0, 0, 0,0.5);
+    margin: 10px;
+    padding: 2px 12px;
+    gap: 10px;
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+}
+
+.infoBox h3 {
+    font-size: 20px;
+    width: 150px;
+}
+
+.forumFrame {
+    margin-top: 10px;
+    height: auto;
+    overflow: hidden;
+    width: 100%;
+}
+
+.forumCard {
+    background-color: rgb(108, 108, 154);
+    height: 120px;
+    padding: 6px 12px;
+}
+.forumCard h2 {
+    font-size: 32px;
+    gap: 0;
+    padding: 0;
+    margin: 6px;
+    white-space: nowrap;
+    color: rgb(255, 255, 255);
+}
+.forumCard h3 {
+    font-size: 24px;
+    gap: 0;
+    padding: 0;
+    margin: 6px;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.8);
+}
+.forumCard h4 {
+    font-size: 20;
+    gap: 0;
+    margin: 6px;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /*Add ... at the end of the missing text*/
+    color: rgba(255, 255, 255, 0.8);
+}
+.forumCard p {
+    font-size: 20px;
+    margin: 6px;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /*Add ... at the end of the missing text*/
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.forumCard:hover {
+  background-color: rgb(73, 73, 102);
+}
+
+.forumCard:active {
+  background-color: rgb(134, 134, 174);
+}
+
+.userdisplay {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /*Add ... at the end of the missing text*/
+    gap: 2px;
+    margin: 0;
+}
+
+.forummenu {
+    list-style-type: none;
+    background-color: rgb(137, 137, 189);
+    color: white;
+    margin: 0;
+    padding: 8px 10px;
+    overflow: hidden;
+    justify-content: space-between;
+    display: flex;
+}
+
+.forummenu button {
+    background-color: rgb(60, 60, 120);
+    color: white;
+    border: none;
+}
+
+.forummenu input, .forummenu button {
+    margin:0;
+    font-size: 24px;
+    padding: 4px 12px;
+}
+
+.userdisplay img {
+    width: 40px;
+    height: 40px;
+    border-radius: 40%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: top;
+}
+
+.desc {
+    width: 100%;
+    font-size: 24px;
+    margin-top: 6px;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.title {
+    width: 100%;
+    font-size: 40; /* Match h1 size */
+    font-weight: bold;
+    margin-top: 6px;
+    padding: 0;
+}
+
+button {
+    background-color: rgb(60, 60, 120);
+    color: white;
+    border: none;
+}

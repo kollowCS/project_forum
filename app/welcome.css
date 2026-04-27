@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    font-size: 18px;
+}
+p a {
+    font-size: 18px;
+    display: inline;
+}
+
+.box {
+    border: 10px solid rgb(62, 62, 114);
+    background-color: rgb(217, 217, 233);
+    box-shadow: 10px 10px 10px rgb(0, 0, 0,0.5);
+    text-align: center;
+    padding: 20px 40px;
+    
+}
+
+.box ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+a {
+    /* color: rgb(119, 119, 119); */
+    /* text-decoration: none; */
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    font-weight:bold;
+    font-style: italic;
+}
