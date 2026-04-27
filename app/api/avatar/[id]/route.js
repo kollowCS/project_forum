@@ -16,17 +16,18 @@ export async function GET(_request, { params }) {
         {status:404}
       );
     }
+    
+    const avatarBuffer = rows[0].avatar;
 
-    const res = new NextResponse(
-      Buffer.from(rows[0].avatar),
-      {
-        headers:{
-          "Content-Type":"image/png"
-        }
-      }
-    )
-    console.log(res);
-    return res;
+    // Use Uint8Array to ensure Web Response compatibility
+    const imageData = new Uint8Array(avatarBuffer);
+
+    return new NextResponse(imageData, {
+    headers: {
+        "Content-Type": "image/png",
+        "Content-Length": imageData.length.toString(),
+    },
+    });
 
   }catch(e){
     console.log(e);
