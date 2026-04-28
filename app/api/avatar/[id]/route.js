@@ -19,17 +19,16 @@ export async function GET(_request, { params }) {
     }
 
     // mysql2 returns BLOBs as Node.js Buffers. 
-    // Convert to a raw ArrayBuffer which Vercel/Web API expects.
-    const nodeBuffer = rows[0].avatar;
-    const arrayBuffer = nodeBuffer.buffer.slice(
-      nodeBuffer.byteOffset, 
-      nodeBuffer.byteOffset + nodeBuffer.byteLength
-    );
+    const avatarBuffer = rows[0].avatar;
+    // const arrayBuffer = nodeBuffer.buffer.slice(
+    //   nodeBuffer.byteOffset, 
+    //   nodeBuffer.byteOffset + nodeBuffer.byteLength
+    // );
 
-    return new Response(arrayBuffer, {
+    return new Response(avatarBuffer, {
       headers: {
         "Content-Type": "image/png",
-        "Content-Length": nodeBuffer.length.toString(),
+        "Content-Length": avatarBuffer.length.toString(),
         // Add a small cache for performance once it's working
         "Cache-Control": "public, max-age=3600, must-revalidate",
       },
