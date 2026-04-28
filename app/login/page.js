@@ -39,7 +39,6 @@ export default function page() {
             console.log(data)
             if (!res.ok) throw new Error(data?.error || "Login failed");
             setAccount(await getLogin());
-            alert("Successfully logged in!")
             router.push(`/home`);
         } catch (err) {
             setError(err.message);
