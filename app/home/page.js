@@ -60,9 +60,6 @@ export default function Page() {
         if (form.avatar) {
             formData.append("avatar", form.avatar);
         }
-        console.log(form)
-        console.log(formData.get("name"))
-        console.log(formData.get("avatar"))
         try {
             const res = await fetch("/api/account/" + account.id, {
                 method: "PUT",
@@ -76,6 +73,7 @@ export default function Page() {
             
             if (!res.ok) throw new Error(data?.error || data?.message);
             setAccount(data); 
+            window.location.reload();
         } catch (err) {
             setError(err.message);
             console.log(err);

@@ -4,6 +4,8 @@ import { writeFile } from 'fs/promises';
 import path from 'path';
 import { error } from "console";
 
+export const dynamic = 'force-dynamic'; //Defuse conflict between local cache data.
+
 // GET /api/attractions/:id
 export async function GET(_request, { params }) {
   const { id } = await params;
@@ -78,7 +80,7 @@ export async function PUT(request,{params}){
       const bytes=await avatarFile.arrayBuffer();
       avatarBuffer=Buffer.from(bytes);
     }
-    console.log(avatarBuffer)
+
     await promisePool.query(
       `UPDATE account SET name=?,email=?,password=?,avatar=? WHERE id=?`,
       [name,email,password,avatarBuffer,id]
