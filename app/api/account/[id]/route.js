@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { mysqlPool } from "@/utils/db";
 import { writeFile } from 'fs/promises';
 import path from 'path';
+import { error } from "console";
 
 // GET /api/attractions/:id
 export async function GET(_request, { params }) {
@@ -36,7 +37,7 @@ export async function PUT(request,{params}){
     const name=data.get("name");
     const email=data.get("email");
     const password=data.get("password");
-    const file=data.get("avatar");
+    const avatarFile=data.get("avatar");
 
     const promisePool=mysqlPool.promise();
 
@@ -64,16 +65,23 @@ export async function PUT(request,{params}){
       );
     }
 
-    let avatar=null;
+    let avatarBuffer = null;
+    const maxAvatarSize = 2 * (1024 * 1024); 
 
-    if(file&&typeof file!=="string"){
-      const bytes=await file.arrayBuffer();
-      avatar=Buffer.from(bytes);
+    if(avatarFile && avatarFile instanceof File){ //check if the file is actually a file.
+      if(avatarFile.size > maxAvatarSize) {
+          return NextResponse.json(
+            {message:"File is too large. Maximum allowed size is 2MB."},
+            {status:413}
+          );
+      }
+      const bytes=await avatarFile.arrayBuffer();
+      avatarBuffer=Buffer.from(bytes);
     }
-
+    console.log(avatarBuffer)
     await promisePool.query(
       `UPDATE account SET name=?,email=?,password=?,avatar=? WHERE id=?`,
-      [name,email,password,avatar,id]
+      [name,email,password,avatarBuffer,id]
     );
 
     const[rows]=await promisePool.query(

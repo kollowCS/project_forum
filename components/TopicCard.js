@@ -13,10 +13,10 @@ export default function topicCard({id,user,title,desc,likes,comments,liked=false
     const [saving, setSaving] = useState(false);
     const [isLiked, setIsLiked] = useState(liked);
     const [likeCount, setLikeCount] = useState(likes);
-    console.log("EDITABLE TOPIC:")
-    console.log(editable)
+    //console.log("EDITABLE TOPIC:")
+    //console.log(editable)
 
-    console.log(liked,isLiked)
+    //console.log(liked,isLiked)
 
     const handleEdit = () => {
         setEditing(true);

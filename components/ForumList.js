@@ -42,8 +42,8 @@ export default function ForumList({filter=''}) {
         });
         if (res.ok) {
             const data = await res.json();
-            console.log("FORUM HERE: ")
-            console.log(data);
+            //console.log("FORUM HERE: ")
+            //console.log(data);
             setForums(data);
         }
         setLoading(false)

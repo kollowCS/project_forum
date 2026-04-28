@@ -29,7 +29,7 @@ export async function GET(_request, { params }) {
       headers: {
         "Content-Type": "image/png",
         "Content-Length": avatarBuffer.length.toString(),
-        // Add a small cache for performance once it's working
+        // Performance?
         "Cache-Control": "public, max-age=3600, must-revalidate",
       },
     });

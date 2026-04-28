@@ -50,9 +50,10 @@ export default function page() {
                 router.push("/forum/"+data.id);
             }
         } catch (error) {
-            console.error("Submission failed:", error);
+            console.error(error);
+        } finally {
+            setSubmit(false)
         }
-        setSubmit(false)
     }
     const handleCancel = (e) => {
         const yes = confirm("Cancel this topic?");

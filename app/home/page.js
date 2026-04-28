@@ -7,6 +7,8 @@ import "./home.css"
 export default function Page() {
     const { account, setAccount, accLoading } = useAuth();
     const [ loading, setLoading ] = useState();
+    const [ submitting, setSubmitting ] = useState();
+    const [error, setError] = useState(null);
 
     const [form, setForm] = useState({
         name: "",
@@ -47,6 +49,7 @@ export default function Page() {
 
     //EVIL AI LABOR 10/10
     const handleSubmit = async (e) => {
+        setSubmitting(true);
         e.preventDefault();
 
         const formData = new FormData();
@@ -57,7 +60,9 @@ export default function Page() {
         if (form.avatar) {
             formData.append("avatar", form.avatar);
         }
-
+        console.log(form)
+        console.log(formData.get("name"))
+        console.log(formData.get("avatar"))
         try {
             const res = await fetch("/api/account/" + account.id, {
                 method: "PUT",
@@ -67,17 +72,15 @@ export default function Page() {
                 body: formData 
             });
 
-            const updatedUser = await res.json();
-
-            if (res.ok) {
-                setAccount(updatedUser); 
-                alert("User updated");
-                window.location.reload();
-            } else {
-                alert(updatedUser.message || "failed");
-            }
-        } catch (error) {
-            console.error("Upload error:", error);
+            const data = await res.json();
+            
+            if (!res.ok) throw new Error(data?.error || data?.message);
+            setAccount(data); 
+        } catch (err) {
+            setError(err.message);
+            console.log(err);
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -117,7 +120,7 @@ export default function Page() {
     },[account])
 
     if (accLoading) return <h1>Loading...</h1>;
-    
+
     return (
         <div>
             <Navbar />
@@ -178,16 +181,21 @@ export default function Page() {
 
                                 <div className='infoBox'>
                                     <h3>Avatar:</h3>
-                                    <input
-                                        type="file"
-                                        name="avatar"
-                                        accept="image/*"
-                                        onChange={handleChange}
-                                    />
+                                    <div className='list' style={{padding:'6px', gap:'6px'}} > 
+                                        <input 
+                                            style={{margin:'0px', padding: 0}}
+                                            type="file"
+                                            name="avatar"
+                                            accept="image/*"
+                                            onChange={handleChange}
+                                        />
+                                        <p style={{margin:'0px', padding: 0, fontSize:'14px'}}>File size must not exceed 2MB.</p>
+                                    </div>
                                 </div>
 
-                                <button type='submit'>Apply</button>
-
+                                <button type='submit' disabled={submitting}>{submitting ? 'Applying..' : 'Apply'}</button>
+                                {error && <div style={{ color: "crimson" }}>{error}</div>}
+                    
                             </form>
                         </>) : <h4>LOADING PROFILE...</h4>
                     ) : (
