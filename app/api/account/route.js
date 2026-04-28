@@ -2,24 +2,6 @@ import { NextResponse } from "next/server";
 import { mysqlPool } from "@/utils/db";
 import fs from "fs/promises";
 
-async function GetToken() {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-    var attempt = 10
-    while (!token || attempt == 0) {
-        attempt--;
-        var candidate = ""
-        for (let i=0;i<64;i++) {
-            candidate += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        const [result] = await promisePool.query(
-            'SELECT id FROM account WHERE token = '+candidate
-        )
-        if (result.length == 0) {
-            return candidate
-        }
-    }
-}
-
 export async function GET(request) {
     const promisePool = mysqlPool.promise();
     const [rows, fields] = await promisePool.query(

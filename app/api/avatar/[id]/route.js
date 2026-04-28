@@ -30,7 +30,7 @@ export async function GET(_request, { params }) {
         "Content-Type": "image/png",
         "Content-Length": avatarBuffer.length.toString(),
         // Performance?
-        "Cache-Control": "public, max-age=3600, must-revalidate",
+        "Cache-Control": "public, max-age=1, must-revalidate",
       },
     });
 

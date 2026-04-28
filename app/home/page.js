@@ -24,6 +24,7 @@ export default function Page() {
             ...prev,
             [name]: type === "file" ? files[0] : value
         }));
+        //console.log("FORM:",form);
     };
 
     //HUMAN LABOR... 1/10
@@ -57,10 +58,12 @@ export default function Page() {
         formData.append("email", form.email);
         formData.append("password", form.password);
         
-        if (form.avatar) {
+        if (form.avatar instanceof File && form.avatar.size > 0) {
             formData.append("avatar", form.avatar);
         }
+
         try {
+            console.log("FORM:",form);
             const res = await fetch("/api/account/" + account.id, {
                 method: "PUT",
                 headers: {
@@ -71,7 +74,7 @@ export default function Page() {
 
             const data = await res.json();
             
-            if (!res.ok) throw new Error(data?.error || data?.message);
+            if (!res.ok) throw new Error(data.message);
             setAccount(data); 
             window.location.reload();
         } catch (err) {
