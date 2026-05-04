@@ -82,10 +82,17 @@ export async function PUT(request,{params}){
       avatarBuffer=Buffer.from(bytes);
     }
 
-    await promisePool.query(
-      `UPDATE account SET name=?,email=?,password=?,avatar=? WHERE id=?`,
-      [name,email,newPassword,avatarBuffer,id]
-    );
+    if (newPassword && newPassword.length > 0) {
+      await promisePool.query(
+        `UPDATE account SET name=?,email=?,password=?,avatar=? WHERE id=?`,
+        [name,email,newPassword,avatarBuffer,id]
+      );
+    } else {
+      await promisePool.query(
+        `UPDATE account SET name=?,email=?,avatar=? WHERE id=?`,
+        [name,email,avatarBuffer,id]
+      );
+    }
 
     const[rows]=await promisePool.query(
       `SELECT id,username,name,email FROM account WHERE id=?`,

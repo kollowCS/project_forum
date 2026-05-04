@@ -58,14 +58,14 @@ export default function Page() {
         formData.append("name", form.name);
         formData.append("email", form.email);
         formData.append("password", form.password);
-        formData.append("new_password", form.newPassword);
+        formData.append("newPassword", form.newPassword);
         
         if (form.avatar instanceof File && form.avatar.size > 0) {
             formData.append("avatar", form.avatar);
         }
 
         try {
-            if (form.newPassword !== form.cfrmPassword) {
+            if (form.newPassword.length > 0 && form.newPassword !== form.cfrmPassword) {
                 throw new Error("New Password and Confirm New Password must match each other.")
             }
             console.log("FORM:",form);
@@ -145,6 +145,17 @@ export default function Page() {
                             </div>
 
                             <form onSubmit={handleSubmit}>
+                                <div className='infoBox'>
+                                    <h3>Password:</h3>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        placeholder="Password"
+                                        value={form.password ?? ""}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
 
                                 <div className='infoBox'>
                                     <h3>Name:</h3>
@@ -165,18 +176,6 @@ export default function Page() {
                                         name="email"
                                         placeholder="Email"
                                         value={form.email ?? ""}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className='infoBox'>
-                                    <h3>Old Password:</h3>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        placeholder="Old Password"
-                                        value={form.password ?? ""}
                                         onChange={handleChange}
                                         required
                                     />
