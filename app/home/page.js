@@ -14,6 +14,7 @@ export default function Page() {
         name: "",
         email: "",
         password: "",
+        cfrmPassword: "",
         avatar: null
     });
 
@@ -24,7 +25,6 @@ export default function Page() {
             ...prev,
             [name]: type === "file" ? files[0] : value
         }));
-        //console.log("FORM:",form);
     };
 
     //HUMAN LABOR... 1/10
@@ -63,6 +63,9 @@ export default function Page() {
         }
 
         try {
+            if (form.password !== form.cfrmPassword) {
+                error("Password and Confirm Password must match each other.")
+            }
             console.log("FORM:",form);
             const res = await fetch("/api/account/" + account.id, {
                 method: "PUT",
@@ -84,8 +87,6 @@ export default function Page() {
             setSubmitting(false);
         }
     };
-
-    if (accLoading) return <div>Loading...</div>;
 
     useEffect(() => {
         const loadForm = async () => {
@@ -181,6 +182,18 @@ export default function Page() {
                                 </div>
 
                                 <div className='infoBox'>
+                                    <h3>Confirm Password:</h3>
+                                    <input
+                                        type="password"
+                                        name="cfrmPassword"
+                                        placeholder="Confirm Password"
+                                        value={form.cfrmPassword ?? ""}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className='infoBox'>
                                     <h3>Avatar:</h3>
                                     <div className='list' style={{padding:'6px', gap:'6px'}} > 
                                         <input 
@@ -196,7 +209,6 @@ export default function Page() {
 
                                 <button type='submit' disabled={submitting}>{submitting ? 'Applying..' : 'Apply'}</button>
                                 {error && <div style={{ color: "crimson" }}>{error}</div>}
-                    
                             </form>
                         </>) : <h4>LOADING PROFILE...</h4>
                     ) : (

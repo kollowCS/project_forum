@@ -11,6 +11,7 @@ export default function MainAccount({ children }) {
   useEffect(() => {
     const loadAcc = async () => {
       setLoading(true);
+      
       const data = await getLogin();
       //console.log(data);
       setAccount(data);
