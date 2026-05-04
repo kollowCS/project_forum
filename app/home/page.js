@@ -189,7 +189,7 @@ export default function Page() {
                                         placeholder="New Password"
                                         value={form.newPassword ?? ""}
                                         onChange={handleChange}
-                                        required
+                                        // required
                                     />
                                 </div>
 
@@ -201,7 +201,7 @@ export default function Page() {
                                         placeholder="Confirm New Password"
                                         value={form.cfrmPassword ?? ""}
                                         onChange={handleChange}
-                                        required
+                                        // required
                                     />
                                 </div>
 
