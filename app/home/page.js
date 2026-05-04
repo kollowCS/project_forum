@@ -186,7 +186,7 @@ export default function Page() {
                                     <h3>New Password:</h3>
                                     <input
                                         type="password"
-                                        name="password"
+                                        name="newPassword"
                                         placeholder="New Password"
                                         value={form.newPassword ?? ""}
                                         onChange={handleChange}
