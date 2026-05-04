@@ -65,7 +65,7 @@ export default function Page() {
         }
 
         try {
-            if (form.newPassword.length > 0 && form.newPassword !== form.cfrmPassword) {
+            if (form.newPassword && form.newPassword.length > 0 && form.newPassword !== form.cfrmPassword) {
                 throw new Error("New Password and Confirm New Password must match each other.")
             }
             console.log("FORM:",form);
