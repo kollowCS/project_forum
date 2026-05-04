@@ -18,7 +18,7 @@ export async function POST(request) {
     const body = await request.json();
     const promisePool = mysqlPool.promise();
     // return NextResponse.json(body);
-    const { username, name, email, password } = body;
+    const { username, name, email } = body;
 
     const [existing] = await promisePool.query(
         `SELECT id FROM account WHERE username = ?`,

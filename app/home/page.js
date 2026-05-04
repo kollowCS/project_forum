@@ -14,6 +14,7 @@ export default function Page() {
         name: "",
         email: "",
         password: "",
+        newPassword: "",
         cfrmPassword: "",
         avatar: null
     });
@@ -57,14 +58,15 @@ export default function Page() {
         formData.append("name", form.name);
         formData.append("email", form.email);
         formData.append("password", form.password);
+        formData.append("new_password", form.newPassword);
         
         if (form.avatar instanceof File && form.avatar.size > 0) {
             formData.append("avatar", form.avatar);
         }
 
         try {
-            if (form.password !== form.cfrmPassword) {
-                error("Password and Confirm Password must match each other.")
+            if (form.newPassword !== form.cfrmPassword) {
+                throw new Error("New Password and Confirm New Password must match each other.")
             }
             console.log("FORM:",form);
             const res = await fetch("/api/account/" + account.id, {
@@ -112,7 +114,6 @@ export default function Page() {
                 setForm({
                     name: account.name,
                     email: account.email,
-                    password: account.password,
                     avatar: avatarFile
                 })
                 setLoading(false)
@@ -170,11 +171,11 @@ export default function Page() {
                                 </div>
 
                                 <div className='infoBox'>
-                                    <h3>Password:</h3>
+                                    <h3>Old Password:</h3>
                                     <input
                                         type="password"
                                         name="password"
-                                        placeholder="Password"
+                                        placeholder="Old Password"
                                         value={form.password ?? ""}
                                         onChange={handleChange}
                                         required
@@ -182,11 +183,23 @@ export default function Page() {
                                 </div>
 
                                 <div className='infoBox'>
-                                    <h3>Confirm Password:</h3>
+                                    <h3>New Password:</h3>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        placeholder="New Password"
+                                        value={form.newPassword ?? ""}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className='infoBox'>
+                                    <h3>Confirm New Password:</h3>
                                     <input
                                         type="password"
                                         name="cfrmPassword"
-                                        placeholder="Confirm Password"
+                                        placeholder="Confirm New Password"
                                         value={form.cfrmPassword ?? ""}
                                         onChange={handleChange}
                                         required

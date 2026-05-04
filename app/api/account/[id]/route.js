@@ -4,14 +4,14 @@ import { writeFile } from 'fs/promises';
 import path from 'path';
 import { error } from "console";
 
-export const dynamic = 'force-dynamic'; //Defuse conflict between local cache data.
+// export const dynamic = 'force-dynamic'; //Defuse conflict between local cache data.
 
 // GET /api/attractions/:id
 export async function GET(_request, { params }) {
   const { id } = await params;
   const promisePool = mysqlPool.promise();
   const [rows] = await promisePool.query(
-    `SELECT * FROM account WHERE id = ?;`,
+    `SELECT username, name, password, avatar FROM account WHERE id = ?;`,
     [id]
   );
   if (rows.length === 0) {
@@ -39,6 +39,7 @@ export async function PUT(request,{params}){
     const name=data.get("name");
     const email=data.get("email");
     const password=data.get("password");
+    const newPassword=data.get("newPassword");
     const avatarFile=data.get("avatar");
 
     const promisePool=mysqlPool.promise();
@@ -56,8 +57,8 @@ export async function PUT(request,{params}){
     }
 
     const[accessible]=await promisePool.query(
-      `SELECT id FROM account WHERE id=? AND token=?`,
-      [id,token]
+      `SELECT id FROM account WHERE id=? AND token=? AND password=?`,
+      [id,token,password]
     );
 
     if(accessible.length===0){
@@ -83,7 +84,7 @@ export async function PUT(request,{params}){
 
     await promisePool.query(
       `UPDATE account SET name=?,email=?,password=?,avatar=? WHERE id=?`,
-      [name,email,password,avatarBuffer,id]
+      [name,email,newPassword,avatarBuffer,id]
     );
 
     const[rows]=await promisePool.query(
