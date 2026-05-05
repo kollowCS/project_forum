@@ -26,7 +26,7 @@ export async function GET(_request, { params }) {
 
 //No. I didnt write this. Do not ask. I already spent 14 hours relearning JS and CSS.
 //It's even a miracle that I even managed to get this project finished. 
-//Sorry, I'm really in a good mood right now so my language can sounds a lil harsh.
+//Sorry, I'm not really in a good mood right now so my language can sounds a lil harsh.
 
 //Thanks Google!
 // PUT /api/account/:id  -> Update
@@ -39,7 +39,7 @@ export async function PUT(request,{params}){
     const name=data.get("name");
     const email=data.get("email");
     const password=data.get("password");
-    const newPassword=data.get("newPassword");
+    const newPassword=data.get("newPassword") | "";
     const avatarFile=data.get("avatar");
 
     const promisePool=mysqlPool.promise();
@@ -82,15 +82,19 @@ export async function PUT(request,{params}){
       avatarBuffer=Buffer.from(bytes);
     }
 
-    if (newPassword && newPassword.length > 0) {
-      await promisePool.query(
-        `UPDATE account SET name=?,email=?,password=?,avatar=? WHERE id=?`,
-        [name,email,newPassword,avatarBuffer,id]
-      );
-    } else {
+    console.log("PASSWORD:",newPassword)
+
+    if (!newPassword) {
+      console.log("Y")
       await promisePool.query(
         `UPDATE account SET name=?,email=?,avatar=? WHERE id=?`,
         [name,email,avatarBuffer,id]
+      );
+    } else {
+      console.log("N")
+      await promisePool.query(
+        `UPDATE account SET name=?,email=?,password=?,avatar=? WHERE id=?`,
+        [name,email,newPassword,avatarBuffer,id]
       );
     }
 
@@ -110,6 +114,7 @@ export async function PUT(request,{params}){
     );
   }
 }
+
 // export async function PUT(request, { params }) {
 //   try {
 //     const { id } = await params;
