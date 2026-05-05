@@ -82,8 +82,6 @@ export async function PUT(request,{params}){
       avatarBuffer=Buffer.from(bytes);
     }
 
-    console.log("PASSWORD:",newPassword)
-
     if (!newPassword) {
       console.log("Y")
       await promisePool.query(
